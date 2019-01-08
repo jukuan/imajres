@@ -1,0 +1,20 @@
+{
+  "source": "../public_html/uploads/",
+  "remember": true,
+  "recursive": true,
+  "force": false,
+  "sizes": [
+    {
+      "name": "thumb",
+      "path": "../public_html/uploads/thumb/",
+      "size": "163x163",
+      "quality": 7
+    },
+    {
+      "name": "promo",
+      "path": "../public_html/uploads/thumb/",
+      "size": "278x278",
+      "quality": 7
+    }
+  ]
+}

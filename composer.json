@@ -1,0 +1,16 @@
+{
+    "name": "julian/app_image",
+    "authors": [
+        {
+            "name": "Juljan",
+            "email": "i@juljan.by"
+        }
+    ],
+    "require": {
+        "hassankhan/config": "^2.0",
+        "spatie/image-optimizer": "^1.1"
+    },
+    "require-dev": {
+        "vimeo/psalm": "^3.0"
+    }
+}
