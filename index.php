@@ -17,7 +17,9 @@ $conf = new Config('config.json');
 $source = $conf->get('source');
 $sizes = $conf->get('sizes');
 
-(new ImgOptimizer($source))->run();
+//(new ImgOptimizer($source))->run();
+(new ImgResizer($source, $source, ['sizes' => $sizes]))->run();
+
 /*
 $files = (new FilesInspector($source))->getFilesList();
 
@@ -33,4 +35,3 @@ if ($sizes && $files) {
         }
     }
 }*/
-

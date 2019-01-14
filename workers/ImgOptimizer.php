@@ -12,9 +12,13 @@ use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class ImgOptimizer extends ImgBase
 {
-    public function validate()
+    public function validate():bool
     {
-        // TODO: Implement validate() method.
+        if (parent::validate()) {
+            return true;
+        }
+
+        return false;
     }
 
     public function processFile($filePath)
@@ -24,4 +28,3 @@ class ImgOptimizer extends ImgBase
         $optimizerChain->optimize($filePath);
     }
 }
-

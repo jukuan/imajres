@@ -10,7 +10,7 @@ class FilesInspector
 {
     protected $dir;
 
-    function __construct($dir)
+    public function __construct($dir)
     {
         $this->dir = $dir;
     }
@@ -24,6 +24,7 @@ class FilesInspector
                     continue;
                 }
 
+                $this->dir = rtrim($this->dir, '/');
                 $list[] = $this->dir . '/' . $entry;
             }
             closedir($handle);

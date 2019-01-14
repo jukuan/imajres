@@ -17,11 +17,13 @@ abstract class ImgBase
     private function getClassName()
     {
         $className = get_called_class();
-        if ($pos = strrpos($className, '\\')) return substr($className, $pos + 1);
+        if ($pos = strrpos($className, '\\')) {
+            return substr($className, $pos + 1);
+        }
         return $pos;
     }
 
-    function __construct(string $source, string $output = null, array $options = [])
+    public function __construct(string $source, string $output = null, array $options = [])
     {
         $this->source = $source;
         $this->output = $output ?? $source;
@@ -32,13 +34,24 @@ abstract class ImgBase
 
     public function isValidDir(string $dir):bool
     {
-
         return file_exists($dir) && is_writable($dir);
     }
 
     public function validate(): bool
     {
-        return $this->isValidDir($this->source) && $this->isValidDir($this->output);
+        if (!$this->isValidDir($this->source)) {
+            $this->addError(
+                sprintf('Source directory "%s" is not valid.', $this->source)
+            );
+        }
+
+        if (!$this->isValidDir($this->output)) {
+            $this->addError(
+                sprintf('Output directory "%s" is not valid.', $this->output)
+            );
+        }
+
+        return 0 === count($this->errors);
     }
 
     protected function getOption(string $key, $default = null)
@@ -55,7 +68,7 @@ abstract class ImgBase
 
     protected function addError($msg)
     {
-        $this->errors[] = $msg;
+        $this->errors[] = 'Error: ' . $msg;
     }
 
     protected function getLastError()
@@ -85,7 +98,7 @@ abstract class ImgBase
         return filesize($path);
     }
 
-    function run()
+    public function run()
     {
         if (!$this->validate()) {
             Console::error($this->getLastError());
@@ -103,5 +116,13 @@ abstract class ImgBase
                 sprintf('Size before was %s and afrer %s', $sizeBefore, $sizeAfter)
             );
         }
+
+        Console::info('===========================');
+
+        Console::info(
+            sprintf('Worker %s is done', get_called_class())
+        );
+
+        Console::info('==========================');
     }
 }

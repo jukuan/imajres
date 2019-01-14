@@ -13,7 +13,7 @@ class MementoFile
     private $slug = '';
     private $lines = [];
 
-    function __construct($key)
+    public function __construct($key)
     {
         $this->slug = $key;
 

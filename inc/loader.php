@@ -8,7 +8,12 @@
 
 
 require_once __DIR__ . '/../vendor/autoload.php';
+require_once 'functions.php';
 require_once 'FilesInspector.php';
+
+if (!is_cli()) {
+    die('You should run it in command line mode only!');
+}
 
 $directories = [
     __DIR__ . '/../workers',
