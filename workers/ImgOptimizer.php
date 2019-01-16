@@ -12,11 +12,13 @@ use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class ImgOptimizer extends ImgBase
 {
-    public function validate():bool
+    public function validate(): bool
     {
         if (parent::validate()) {
             return true;
         }
+
+        Console::error('Not valid dirs');
 
         return false;
     }

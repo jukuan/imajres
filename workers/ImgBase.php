@@ -113,7 +113,7 @@ abstract class ImgBase
 
             Console::info($filePath);
             Console::success(
-                sprintf('Size before was %s and afrer %s', $sizeBefore, $sizeAfter)
+                sprintf('Size before was %s and after %s', $sizeBefore, $sizeAfter)
             );
         }
 

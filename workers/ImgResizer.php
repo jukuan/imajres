@@ -54,8 +54,6 @@ class ImgResizer extends ImgBase
             );
         }
 
-//        return $imagick->getImageBlob();
-
         $ext = pathinfo($imagePath, PATHINFO_EXTENSION);
         $imagick->setImageFormat($ext);
         file_put_contents(APP_PATH . DIRECTORY_SEPARATOR . $outputPath, $imagick);
