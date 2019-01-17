@@ -6,6 +6,8 @@
  * Date: 1/3/19
  * Time: 11:45 PM
  */
+namespace Imajres;
+
 class FilesInspector
 {
     protected $dir;

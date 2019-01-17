@@ -9,6 +9,8 @@
 define('APP_PATH', __DIR__);
 require_once 'inc/loader.php';
 
+use Imajres\Workers\ImgOptimizer;
+use Imajres\Workers\ImgResizer;
 use Noodlehaus\Config;
 use Noodlehaus\Parser\Json;
 

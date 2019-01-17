@@ -1,11 +1,7 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: julian
- * Date: 1/3/19
- * Time: 11:39 PM
- */
+namespace Imajres\Entities;
+
 class ImgSize
 {
     protected $name = '';

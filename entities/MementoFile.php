@@ -1,11 +1,11 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: julian
- * Date: 1/5/19
- * Time: 9:13 PM
- */
+namespace Imajres\Entities;
+
+if (!defined('APP_PATH')) {
+    define('APP_PATH', dirname(dirname(__DIR__)));
+}
+
 class MementoFile
 {
     const LINE_DELIMITER = "\n";

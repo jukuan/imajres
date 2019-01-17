@@ -1,13 +1,15 @@
 <?php
 
+namespace Imajres\Workers;
+
 require_once 'ImgBase.php';
 
-/**
- * Created by PhpStorm.
- * User: julian
- * Date: 1/5/19
- * Time: 12:49 AM
- */
+if (!defined('APP_PATH')) {
+    define('APP_PATH', dirname(dirname(__DIR__)));
+}
+
+use Imagick;
+use Imajres\Entities\ImgSize;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class ImgResizer extends ImgBase
@@ -30,7 +32,7 @@ class ImgResizer extends ImgBase
 
         $filterType = Imagick::FILTER_LANCZOS;
 
-        $imagick = new \Imagick(realpath($imagePath));
+        $imagick = new Imagick(realpath($imagePath));
 
         $imagick->resizeImage($width, $height, $filterType, $blur);
 
@@ -38,14 +40,14 @@ class ImgResizer extends ImgBase
         $cropHeight = $imagick->getImageHeight();
 
         if ($cropZoom) {
-            $newWidth = $cropWidth / 2;
-            $newHeight = $cropHeight / 2;
+            $newWidth = intval($cropWidth / 2);
+            $newHeight = intval($cropHeight / 2);
 
             $imagick->cropimage(
                 $newWidth,
                 $newHeight,
-                ($cropWidth - $newWidth) / 2,
-                ($cropHeight - $newHeight) / 2
+                intval(($cropWidth - $newWidth) / 2),
+                intval(($cropHeight - $newHeight) / 2)
             );
 
             $imagick->scaleimage(
@@ -66,7 +68,7 @@ class ImgResizer extends ImgBase
         return $this->getOption('sizes');
     }
 
-    public function processFile($filePath)
+    public function processFile(string $filePath)
     {
         $filename = is_file($filePath) ? basename($filePath) : false;
         if (!$filename) {

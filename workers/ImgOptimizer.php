@@ -1,13 +1,10 @@
 <?php
 
+namespace Imajres\Workers;
+
 require_once 'ImgBase.php';
 
-/**
- * Created by PhpStorm.
- * User: julian
- * Date: 1/5/19
- * Time: 12:49 AM
- */
+use Imajres\Entities\Console;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class ImgOptimizer extends ImgBase
@@ -23,7 +20,7 @@ class ImgOptimizer extends ImgBase
         return false;
     }
 
-    public function processFile($filePath)
+    public function processFile(string $filePath)
     {
         $optimizerChain = OptimizerChainFactory::create();
 

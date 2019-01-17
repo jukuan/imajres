@@ -6,7 +6,6 @@
  * Time: 12:22 AM
  */
 
-
 require_once __DIR__ . '/../vendor/autoload.php';
 require_once 'functions.php';
 require_once 'FilesInspector.php';
@@ -21,7 +20,7 @@ $directories = [
 ];
 
 array_walk($directories, function ($dir) {
-    (new FilesInspector($dir))->execute(function ($file) {
+    (new Imajres\FilesInspector($dir))->execute(function ($file) {
         require_once $file;
     });
 });

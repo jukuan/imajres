@@ -1,11 +1,11 @@
 <?php
 
-/**
- * Created by PhpStorm.
- * User: julian
- * Date: 1/5/19
- * Time: 5:30 PM
- */
+namespace Imajres\Workers;
+
+use Imajres\Entities\Console;
+use Imajres\Entities\MementoFile;
+use Imajres\FilesInspector;
+
 abstract class ImgBase
 {
     protected $source = '';
@@ -20,7 +20,7 @@ abstract class ImgBase
         if ($pos = strrpos($className, '\\')) {
             return substr($className, $pos + 1);
         }
-        return $pos;
+        return $className;
     }
 
     public function __construct(string $source, string $output = null, array $options = [])
@@ -81,7 +81,7 @@ abstract class ImgBase
         return (new FilesInspector($this->source))->getFilesList();
     }
 
-    abstract public function processFile($filePath);
+    abstract public function processFile(string $filePath);
 
     protected function isProcessed(string $file): bool
     {

@@ -1,5 +1,7 @@
 <?php
 
+namespace Imajres\Entities;
+
 /**
  * Created by PhpStorm.
  * User: julian
