@@ -3,7 +3,7 @@
 namespace Imajres\Workers;
 
 require_once 'ImgBase.php';
-require_once '../inc/functions.php';
+require_once __DIR__ . '/../inc/functions.php';
 
 if (!defined('APP_PATH')) {
     define('APP_PATH', dirname(dirname(__DIR__)));
@@ -64,7 +64,7 @@ class ImgResizer extends ImgBase
 //        $imagick->imageWriteFile(fopen($outputPath, 'wb'));
     }
 
-    public function getOptionSizes()
+    private function getOptionSizes()
     {
         return $this->getOption('sizes');
     }
@@ -79,7 +79,7 @@ class ImgResizer extends ImgBase
         foreach ($this->getOptionSizes() as $imgSize) {
             $sizer = new ImgSize($imgSize);
             $output = merge_paths(dirname($destination), $sizer->getPrefixDir(), $filename);
-            list($width, $height) = $sizer->getParsedSizes();
+            list($width, $height) = $sizer->getParsedSize();
             $this->resizeImage($sourceFile, $output, $width, $height);
         }
     }

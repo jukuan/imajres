@@ -1,5 +1,5 @@
 {
-    "name": "julian/app_image",
+    "name": "jukuan/imajres",
     "authors": [
         {
             "name": "Juljan",
@@ -12,5 +12,9 @@
     },
     "require-dev": {
         "vimeo/psalm": "^3.0"
+    },
+    "scripts": {
+        "psalm": "./vendor/bin/psalm",
+        "cs": "php-cs-fixer fix ."
     }
 }

@@ -6,7 +6,7 @@ use Imajres\Entities\Console;
 use Imajres\Entities\MementoFile;
 use Imajres\FilesInspector;
 
-require_once '../inc/functions.php';
+require_once __DIR__ . '/../inc/functions.php';
 
 if (!defined('APP_PATH')) {
     define('APP_PATH', dirname(dirname(__DIR__)));
@@ -18,14 +18,19 @@ abstract class ImgBase
     protected $output = '';
     protected $options = [];
     protected $errors = [];
+
+    /**
+     * @var MementoFile
+     */
     protected $memento = null;
 
-    private function getClassName()
+    private function getClassName(): string
     {
         $className = get_called_class();
         if ($pos = strrpos($className, '\\')) {
             return substr($className, $pos + 1);
         }
+
         return $className;
     }
 
@@ -153,12 +158,16 @@ abstract class ImgBase
 
             $sizeAfter = $this->getFileSize($destinationFile);
 
-            $ratio = number_format($sizeAfter/$sizeBefore*100, 2);
+            $ratio = number_format($sizeAfter / $sizeBefore * 100, 2);
             Console::success(
                 sprintf('Size before was %d and size after is %d. Ratio: %d.', $sizeBefore, $sizeAfter, $ratio)
             );
         }
 
         $this->afterRun();
+    }
+
+    public function processImage($fileImage)
+    {
     }
 }

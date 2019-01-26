@@ -22,7 +22,7 @@ class ImgSize
         }
     }
 
-    public function getParsedSizes()
+    public function getParsedSize()
     {
         if (!$this->width || !$this->height) {
             $this->size = strtolower($this->size);

@@ -43,8 +43,13 @@ function trailingslashit($string)
 
 function merge_paths()
 {
-    $args = func_get_args();
-    array_walk($args, 'untrailingslashit');
+    $args = array_filter(func_get_args(), function ($path) {
+        return !empty($path);
+    });
+
+    array_walk($args, function (&$path) {
+        $path = untrailingslashit($path);
+    });
 
     return implode('/', $args);
 }
