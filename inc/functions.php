@@ -30,3 +30,21 @@ function is_cli()
 
     return false;
 }
+
+function untrailingslashit($string)
+{
+    return rtrim($string, '/\\');
+}
+
+function trailingslashit($string)
+{
+    return untrailingslashit($string) . '/';
+}
+
+function merge_paths()
+{
+    $args = func_get_args();
+    array_walk($args, 'untrailingslashit');
+
+    return implode('/', $args);
+}

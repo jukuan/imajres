@@ -6,18 +6,19 @@
  * Time: 11:19 PM
  */
 
-define('APP_PATH', __DIR__);
-require_once 'inc/loader.php';
-
 use Imajres\Workers\ImgOptimizer;
 use Imajres\Workers\ImgResizer;
 use Noodlehaus\Config;
-use Noodlehaus\Parser\Json;
+
+define('APP_PATH', __DIR__);
+require_once 'inc/loader.php';
 
 $conf = new Config('config.json');
 
-$source = $conf->get('source');
-$sizes = $conf->get('sizes');
+if ($config = (object) $conf->get('optimizer')) {
+    (new ImgOptimizer($config->source))->run();
+}
 
-(new ImgOptimizer($source))->run();
-(new ImgResizer($source, $source, ['sizes' => $sizes]))->run();
+if ($config = (object) $conf->get('resizer')) {
+    (new ImgResizer($config->source, null, ['sizes' => $config->sizes]))->run();//    (new ImgResizer($config->source, null, ['sizes' => $config->images]))->run();
+}

@@ -35,7 +35,7 @@ class ImgSize
         ];
     }
 
-    public function getOutputDir()
+    public function getPrefixDir(): string
     {
         return $this->path;
     }

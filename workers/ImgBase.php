@@ -6,6 +6,12 @@ use Imajres\Entities\Console;
 use Imajres\Entities\MementoFile;
 use Imajres\FilesInspector;
 
+require_once '../inc/functions.php';
+
+if (!defined('APP_PATH')) {
+    define('APP_PATH', dirname(dirname(__DIR__)));
+}
+
 abstract class ImgBase
 {
     protected $source = '';
@@ -81,7 +87,7 @@ abstract class ImgBase
         return (new FilesInspector($this->source))->getFilesList();
     }
 
-    abstract public function processFile(string $filePath);
+    abstract public function processFile(string $sourceFile, string $destination);
 
     protected function isProcessed(string $file): bool
     {
@@ -98,25 +104,28 @@ abstract class ImgBase
         return filesize($path);
     }
 
-    public function run()
+    protected function preparePath(string $path): string
     {
-        if (!$this->validate()) {
-            Console::error($this->getLastError());
-
-            return;
+        if (false !== \strpos($path, APP_PATH)) {
+            return $path;
         }
 
-        foreach ($this->getFiles() as $filePath) {
-            $sizeBefore = $this->getFileSize($filePath);
-            $this->processFile($filePath);
-            $sizeAfter = $this->getFileSize($filePath);
+        return merge_paths(APP_PATH, $path);
+    }
 
-            Console::info($filePath);
-            Console::success(
-                sprintf('Size before was %s and after %s', $sizeBefore, $sizeAfter)
-            );
+    protected function prepareDestination(string $sourceFile): string
+    {
+        if (!$this->output) {
+            return $sourceFile;
         }
 
+        $filename = basename($sourceFile);
+
+        return trailingslashit($this->output) . $filename;
+    }
+
+    public function afterRun(): void
+    {
         Console::info('===========================');
 
         Console::info(
@@ -124,5 +133,32 @@ abstract class ImgBase
         );
 
         Console::info('==========================');
+    }
+
+    public function run(): void
+    {
+        if (!$this->validate()) {
+            Console::error($this->getLastError());
+
+            return;
+        }
+
+        foreach ($this->getFiles() as $sourceFile) {
+            Console::info($sourceFile);
+
+            $sizeBefore = $this->getFileSize($sourceFile);
+
+            $destinationFile = $this->prepareDestination($sourceFile);
+            $this->processFile($sourceFile, $destinationFile);
+
+            $sizeAfter = $this->getFileSize($destinationFile);
+
+            $ratio = number_format($sizeAfter/$sizeBefore*100, 2);
+            Console::success(
+                sprintf('Size before was %d and size after is %d. Ratio: %d.', $sizeBefore, $sizeAfter, $ratio)
+            );
+        }
+
+        $this->afterRun();
     }
 }

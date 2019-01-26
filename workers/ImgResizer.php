@@ -3,6 +3,7 @@
 namespace Imajres\Workers;
 
 require_once 'ImgBase.php';
+require_once '../inc/functions.php';
 
 if (!defined('APP_PATH')) {
     define('APP_PATH', dirname(dirname(__DIR__)));
@@ -10,7 +11,6 @@ if (!defined('APP_PATH')) {
 
 use Imagick;
 use Imajres\Entities\ImgSize;
-use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 class ImgResizer extends ImgBase
 {
@@ -56,9 +56,10 @@ class ImgResizer extends ImgBase
             );
         }
 
+        $outputPath = $this->preparePath($outputPath);
         $ext = pathinfo($imagePath, PATHINFO_EXTENSION);
         $imagick->setImageFormat($ext);
-        file_put_contents(APP_PATH . DIRECTORY_SEPARATOR . $outputPath, $imagick);
+        file_put_contents($outputPath, $imagick);
 
 //        $imagick->imageWriteFile(fopen($outputPath, 'wb'));
     }
@@ -68,18 +69,18 @@ class ImgResizer extends ImgBase
         return $this->getOption('sizes');
     }
 
-    public function processFile(string $filePath)
+    public function processFile(string $sourceFile, string $destination)
     {
-        $filename = is_file($filePath) ? basename($filePath) : false;
+        $filename = is_file($sourceFile) ? basename($sourceFile) : false;
         if (!$filename) {
             return false;
         }
 
         foreach ($this->getOptionSizes() as $imgSize) {
             $sizer = new ImgSize($imgSize);
-            $output = $sizer->getOutputDir() . $filename;
+            $output = merge_paths(dirname($destination), $sizer->getPrefixDir(), $filename);
             list($width, $height) = $sizer->getParsedSizes();
-            $this->resizeImage($filePath, $output, $width, $height);
+            $this->resizeImage($sourceFile, $output, $width, $height);
         }
     }
 }

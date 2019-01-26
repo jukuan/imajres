@@ -1,20 +1,25 @@
 {
-  "source": "../../kroplia.by/public_html/uploads/",
   "remember": true,
   "recursive": true,
   "force": false,
-  "sizes": [
-    {
-      "name": "thumb",
-      "path": "../../kroplia.by/public_html/uploads/thumb/",
-      "size": "163x163",
-      "quality": 7
-    },
-    {
-      "name": "promo",
-      "path": "../../kroplia.by/public_html/uploads/promo/",
-      "size": "278x278",
-      "quality": 7
-    }
-  ]
+  "optimizer": {
+    "source": "../../kroplia.by/public_html/uploads/"
+  },
+  "resizer": {
+    "source": "../../kroplia.by/public_html/uploads/",
+    "sizes": [
+      {
+        "name": "thumb",
+        "path": "thumb",
+        "size": "163x163",
+        "quality": 7
+      },
+      {
+        "name": "promo",
+        "path": "promo",
+        "size": "278x278",
+        "quality": 7
+      }
+    ]
+  }
 }

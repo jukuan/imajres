@@ -20,10 +20,10 @@ class ImgOptimizer extends ImgBase
         return false;
     }
 
-    public function processFile(string $filePath)
+    public function processFile(string $sourceFile, string $destination)
     {
         $optimizerChain = OptimizerChainFactory::create();
 
-        $optimizerChain->optimize($filePath);
+        $optimizerChain->optimize($sourceFile);
     }
 }
