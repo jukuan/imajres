@@ -14,13 +14,18 @@ use Noodlehaus\Config;
 define('APP_PATH', __DIR__);
 require_once 'inc/loader.php';
 
-$conf = new Config('config.json');
+$config = merge_paths(APP_PATH, 'config.json');
+if (!file_exists($config)) {
+    \Imajres\Entities\Console::error('Config file does not found.');
+    die();
+}
+$theConf = new Config($config);
 
-if ($config = (object) $conf->get('optimizer')) {
+if ($config = (object) $theConf->get('optimizer')) {
     (new ImgOptimizer($config->source))->run();
 }
 
-if ($config = (object) $conf->get('resizer')) {
+if ($config = (object) $theConf->get('resizer')) {
     if (isset($config->sizes)) {
         (new ImgResizer($config->source, null, ['sizes' => $config->sizes]))->run();
     }
